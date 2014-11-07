@@ -9,6 +9,7 @@ public class Main {
 		double[][] B = {{1, 2},{3, 4},{5, 6}};
 		//double[][] C = matrixMath.getInverse(A);
 		printMatrix(A);
+		System.out.println("TEST");
 		
 	}
 	
