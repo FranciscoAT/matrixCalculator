@@ -186,7 +186,7 @@ public class matrixMath {
 	 * @param l (int, side length)
 	 * @return Identity Matrix: I (side length L)
 	 */
-	public static double[][] generateIdentity(int l){
+	private static double[][] generateIdentity(int l){
 		double[][] T = new double[l][l];
 		for(int i = 0; i<l; i++){
 			for(int j = 0; j<l; j++){
