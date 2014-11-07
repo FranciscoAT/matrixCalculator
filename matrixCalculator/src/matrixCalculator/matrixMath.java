@@ -160,6 +160,8 @@ public class matrixMath {
 	public static double[][] getInverse(double[][] A){
 		if(A.length != A[0].length)
 			return null;
+		if(getDet(A) == 0)
+			return null;
 		double T[][] = new double[A.length][A.length*2];
 		double I[][] = generateIdentity(A.length);
 		for(int i = 0; i<A.length; i++){
