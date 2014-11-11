@@ -123,10 +123,14 @@ public class matrixMath {
 	 * @return Row reduced A matrix 
 	 */
 	public static double[][] rowReduce(double[][] A, int aug){
-		for(int c = 0; c <aug; c++){
-			if(c<A[0].length){
+		int rank;
+		if(A.length<aug)
+			rank = A.length;
+		else
+			rank = aug;
+		for(int c = 0; c <rank; c++){
 				if(A[c][c] == 0){
-					for(int r = c+1; r<A[0].length; r++){
+					for(int r = c+1; r<A.length; r++){
 						if(A[r][c] != 0){
 							double T[] = new double[A.length];
 							for(int i = 0; i<A.length; i++){
@@ -137,7 +141,6 @@ public class matrixMath {
 						}
 					}
 				}
-			}
 			
 			double constant = A[c][c];
 			for(int i = 0; i <A[0].length; i++){
@@ -153,6 +156,7 @@ public class matrixMath {
 				}
 			}
 		}
+		A = sortByRank(A, aug);
 		return A;
 	} //end rowReduction method
 	
@@ -200,6 +204,32 @@ public class matrixMath {
 		}
 		return T;
 	} //end generateIdentity
+	
+	
+	private static double[][] sortByRank(double[][] A, int aug){
+		int rank, t = 0;
+		if(A.length<aug)
+			rank = A.length;
+		else
+			rank = aug;
+		for(int c = 0; c <rank; c++){
+			if(A[c-t][c+t] == 0){
+				for(int r = c+1-t; r<A.length; r++){
+					if(A[r][c+t] != 0){
+						double T[] = new double[A.length];
+						for(int i = 0; i<A.length; i++){
+							T[i] = A[c-t][i];
+							A[c-t][i] = A[r][i];
+							A[r][i] = T[i];
+						}
+					}
+				}
+			}
+			if(A[c][c] == 0 && c+t<aug)
+				t++;
+		}
+		return A;
+	} //end sortByRank method
 	
 
 } //end matrixMath class

@@ -5,10 +5,10 @@ public class Main {
 	
 	public static Scanner sc = new Scanner(System.in);
 	public static void main(String args[]){
-		double[][] A = {{1, 2, 1}};
+		double[][] A = {{1, 2, 1, 1, 2},{0, 1, 1, 2, -2},{0, 0, 0, 3, -6},{1, 1, 0, 4, -6}};
 		double[][] B = {{1, 2},{3, 4},{5, 6}};
-		//double[][] C = matrixMath.getInverse(A);
-		printMatrix(A);
+		double[][] C = matrixMath.rowReduce(A, 5);
+		printMatrix(C);
 		
 	}
 	
