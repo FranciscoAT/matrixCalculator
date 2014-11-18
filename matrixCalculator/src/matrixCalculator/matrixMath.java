@@ -118,6 +118,7 @@ public class matrixMath {
 	
 	/**
 	 * NOTE: Does not account for impossible matrices
+	 * NOTE: If no augmented matrix aug = A.length +1
 	 * @param A (matrix)
 	 * @param aug (int) Location (starting from 0) of column of augmented matrix
 	 * @return Row reduced A matrix 
@@ -161,6 +162,12 @@ public class matrixMath {
 	} //end rowReduction method
 	
 	
+	/**
+	 * Returns inverse matrix of double A
+	 * NOTE: Matrix must not be augmented!
+	 * @param A
+	 * @return
+	 */
 	public static double[][] getInverse(double[][] A){
 		if(A.length != A[0].length)
 			return null;
@@ -207,26 +214,23 @@ public class matrixMath {
 	
 	
 	private static double[][] sortByRank(double[][] A, int aug){
-		int rank, t = 0;
-		if(A.length<aug)
-			rank = A.length;
-		else
-			rank = aug;
-		for(int c = 0; c <rank; c++){
-			if(A[c-t][c+t] == 0){
-				for(int r = c+1-t; r<A.length; r++){
-					if(A[r][c+t] != 0){
-						double T[] = new double[A.length];
-						for(int i = 0; i<A.length; i++){
-							T[i] = A[c-t][i];
-							A[c-t][i] = A[r][i];
-							A[r][i] = T[i];
-						}
+		int index = 0;
+		for(int i = 0; i < A.length-index; i++){
+			boolean zeroRow = true;
+			for(int j = 0; j<aug; j++){
+				if(A[i][j] != 0)
+					zeroRow = false;
+			}
+			if(zeroRow){
+				for(int k = i; k<A.length-1; k++){
+					for(int j = 0; j <A[0].length; j++){
+						double T = A[k][j];
+						A[k][j] =A[k+1][j];
+						A[k+1][j] = T;
 					}
 				}
+				index ++;
 			}
-			if(A[c][c] == 0 && c+t<aug)
-				t++;
 		}
 		return A;
 	} //end sortByRank method

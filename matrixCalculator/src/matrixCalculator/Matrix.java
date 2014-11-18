@@ -1,13 +1,16 @@
 package matrixCalculator;
 
 public class Matrix {
-	public double[][] A;
-	public int row, column;
+	private static double[][] A;
+	private int row, column, augmentedIndex;
+	private boolean augmented;
 	
 	public Matrix(double[][] M){
 		A = M;
 		row = A.length;
 		column = A[0].length;
+		augmentedIndex = A[0].length+1;
+		augmented = false;
 	}
 	
 	public double[][]getMatrix(){
@@ -34,5 +37,9 @@ public class Matrix {
 	
 	public int getNumColumns(){
 		return column;
+	}
+	
+	public static void changeMatrix(double B[][]){
+		A = B;
 	}
 }
