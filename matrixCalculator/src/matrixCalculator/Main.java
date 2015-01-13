@@ -1,13 +1,13 @@
-package matrixCalculator;
+ package matrixCalculator;
 
 import java.util.Scanner;
 public class Main {
 	
 	public static Scanner sc = new Scanner(System.in);
 	public static void main(String args[]){
-		double[][] A = {{1, 2, 1, 1, 2},{0, 1, 1, 2, -2},{0, 0, 0, 3, -6},{1, 1, 0, 4, -6}};
+		double[][] A = {{5,3,1, 1}, {0, 2, 1, 2}, {5, 0, 2, 4}};
 		double[][] B = {{1, 2},{3, 4},{5, 6}};
-		double[][] C = matrixMath.rowReduce(A, 5);
+		double[][] C = matrixMath.rowReduce(A, 3);
 		printMatrix(C);
 		
 	}
