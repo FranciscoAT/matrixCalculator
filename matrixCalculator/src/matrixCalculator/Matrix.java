@@ -2,25 +2,27 @@ package matrixCalculator;
 
 import javax.swing.JButton;
 
-public class Matrix {
-	private static double[][] A;
+public class Matrix{
+	private double[][] A;
 	private int row, column, augmentedIndex;
 	private boolean augmented;
-	private JButton button;
 	private String name;
 	
-	public Matrix(double[][] M, String s){
+	public Matrix(String s, int numRow, int numColumn){
+		augmented = false;
+		row = numRow;
+		column = numColumn;
+		name = s;
+	}
+	
+	public void setMatrixValues (double[][] M){
 		A = M;
 		row = A.length;
 		column = A[0].length;
 		augmentedIndex = A[0].length+1;
-		augmented = false;
-		name = s;
-		button = new JButton(name);
-		button.setSize(190, 30);
 	}
 	
-	public double[][]getMatrix(){
+	public double[][] getMatrix(){
 		return A;
 	}
 	
@@ -38,6 +40,8 @@ public class Matrix {
 		}
 	}
 	
+	
+	
 	public int getNumRows(){
 		return row;
 	}
@@ -46,11 +50,12 @@ public class Matrix {
 		return column;
 	}
 	
-	public static void changeMatrix(double B[][]){
-		A = B;
+	public String getName(){
+		return name;
 	}
 	
-	public JButton getButton(){
-		return button;
+	public void changeName(String s){
+		name = s;
 	}
+	
 }

@@ -1,6 +1,8 @@
 package matrixCalculator;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -8,36 +10,58 @@ import java.util.ArrayList;
 public class GUI extends JFrame implements ActionListener {
 	
 	private JPanel topBar, logoBar;
-	private JScrollPane matrixList;
-	
+	private JList matrixList;
+	private DefaultListModel MLModel;
+	private JScrollPane listScroller;
+	private JButton createNewMatrix, selectMatrix, deleteMatrix, help;
+		
 	
 	public GUI(){
-		super("TEST");
+		super("Matrix Calculator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setSize(980, 600);
-		setResizable(false);
-		Font textFont = new Font("Courier New", Font.BOLD, 200);
-		
+		setResizable(true);
 		Container c = getContentPane();
-		c.setLayout(null);
 		c.setBackground(Color.lightGray);
 		
-		logoBar = new JPanel();
-		logoBar.setBounds(0, 0,(int)(getWidth()*0.2), getHeight());
-
-		
-		matrixList = new JScrollPane();
-		matrixList.setBounds(0, 200, logoBar.getWidth(), getHeight() - 200);
-		add(matrixList);
-		add(logoBar);
+		init();
 		
 		setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	public void init(){
+		leftBar();
+	}
+	
+	public void leftBar(){
+		logoBar = new JPanel();
+		logoBar.setPreferredSize(new Dimension(200, getHeight()));
+		
+		JLabel title = new JLabel("Matrix Calculator");
+		title.setPreferredSize(new Dimension(logoBar.getWidth(), 100));
+		title.setOpaque(true);
+		logoBar.add(title, BorderLayout.NORTH);
+		
+		
+		MLModel = new DefaultListModel();
+		for(int i = 0; i<10; i++){
+			MLModel.addElement("Test"+i);
+		}
+		
+		matrixList = new JList(MLModel);
+		matrixList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		listScroller = new JScrollPane(matrixList);
+		listScroller.setBounds(10,10,50,50);
+		
+		logoBar.add(listScroller, BorderLayout.CENTER);
+		add(logoBar, BorderLayout.WEST);
+
 	}
 }
