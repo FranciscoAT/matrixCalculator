@@ -1,6 +1,5 @@
 package matrixCalculator;
 
-import javax.swing.JButton;
 
 public class Matrix{
 	private double[][] A;
@@ -8,11 +7,11 @@ public class Matrix{
 	private boolean augmented;
 	private String name;
 	
-	public Matrix(String s, int numRow, int numColumn){
+	public Matrix(String name, int numRow, int numColumn){
 		augmented = false;
-		row = numRow;
-		column = numColumn;
-		name = s;
+		this.row = numRow;
+		this.column = numColumn;
+		this.name = name;
 	}
 	
 	public void setMatrixValues (double[][] M){
