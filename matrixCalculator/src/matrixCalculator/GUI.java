@@ -7,10 +7,11 @@ public class GUI extends JFrame implements ActionListener {
 	
 	private JPanel topBar, logoBar;
 	private JList matrixList;
-	private DefaultListModel MLModel;
+	private DefaultListModel<Matrix> MLModel;
 	private JScrollPane listScroller;
 	private JButton createMatrix, selectMatrix, deleteMatrix, helpButton, transposeButton, detButton, rowRedButton, inverseButton;
 	private Screen mainScreen;	
+	private Matrix selectedMatrix;
 	
 	public GUI(){
 		super("Matrix Calculator");
@@ -28,6 +29,9 @@ public class GUI extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == createMatrix){
+			createMatrix();
+		}
 		
 	}
 	
@@ -45,10 +49,7 @@ public class GUI extends JFrame implements ActionListener {
 		logoBar.setLayout(new BorderLayout());
 		logoBar.setBackground(new Color(214, 33, 36));
 		
-		MLModel = new DefaultListModel();
-		for(int i = 0; i<30; i++){
-			MLModel.addElement("Test"+i);
-		}
+		MLModel = new DefaultListModel<Matrix>();
 		
 		matrixList = new JList(MLModel);
 		matrixList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -112,5 +113,12 @@ public class GUI extends JFrame implements ActionListener {
 		topBar.add(inverseButton);
 		
 		add(topBar, BorderLayout.NORTH);
+	}
+	
+	public void createMatrix(){
+		mainScreen.createNewMatrixA();
+		repaint();
+		revalidate();
+		
 	}
 }
