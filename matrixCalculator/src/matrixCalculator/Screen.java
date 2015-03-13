@@ -10,10 +10,11 @@ public class Screen extends JPanel implements ActionListener{
 	private static int maxArrLength = 10;
 	private ArrayList<Matrix> matrixList;
 	private JLabel title;
-	private JPanel topPanel;
+	private JPanel topPanel, centerPanel;
 	private JButton createMatrixAButton, createMatrixBButton;
 	
 	public Screen(){
+		setLayout(new BorderLayout());
 		matrixList = new ArrayList<Matrix>();
 		setSize(new Dimension(780,525));
 		
@@ -25,8 +26,11 @@ public class Screen extends JPanel implements ActionListener{
 		title.setOpaque(false);
 		
 		topPanel.add(title);
+		
+		centerPanel = new JPanel();
+		
+		add(centerPanel, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
-		System.out.println(this.getWidth());
 	}
 	
 	public void actionPerformed(ActionEvent e){
@@ -44,8 +48,8 @@ public class Screen extends JPanel implements ActionListener{
 		}
 		
 		JComboBox numRows = new JComboBox(maxLength);
-		
-		add(numRows, BorderLayout.CENTER);
+		centerPanel.add(numRows);
+		revalidate();
 	}
 	
 	

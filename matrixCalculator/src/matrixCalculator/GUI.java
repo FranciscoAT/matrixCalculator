@@ -116,9 +116,31 @@ public class GUI extends JFrame implements ActionListener {
 	}
 	
 	public void createMatrix(){
+		JButton disableButtons[] = {helpButton};
+		disableAllBut(disableButtons);
 		mainScreen.createNewMatrixA();
-		repaint();
-		revalidate();
+		//repaint();
+		//revalidate();
 		
+	}
+	
+	public void disableAllBut(JButton[] b){
+		JButton allButton[] = {createMatrix, selectMatrix, deleteMatrix, helpButton, transposeButton, detButton, rowRedButton, inverseButton};
+		for(int i = 0; i<allButton.length; i++){
+			boolean disable = true;
+			for(int j = 0; j<b.length; j++){
+				if(b[j] == allButton[i])
+					disable = false;
+			}
+			if(disable)
+				allButton[i].setEnabled(false);
+		}	
+	}
+	
+	public void enableAll(){
+		JButton allButton[] = {createMatrix, selectMatrix, deleteMatrix, helpButton, transposeButton, detButton, rowRedButton, inverseButton};
+		for(int i = 0; i<allButton.length; i++){
+			allButton[i].setEnabled(true);
+		}
 	}
 }
