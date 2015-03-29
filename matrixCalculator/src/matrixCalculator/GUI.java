@@ -2,20 +2,24 @@ package matrixCalculator;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUI extends JFrame implements ActionListener {
 	
 	private JPanel topBar, logoBar;
 	private JList matrixList;
-	private DefaultListModel<Matrix> MLModel;
+	private DefaultListModel<String> MLModel;
 	private JScrollPane listScroller;
 	private JButton createMatrix, selectMatrix, deleteMatrix, helpButton, transposeButton, detButton, rowRedButton, inverseButton;
 	private Screen mainScreen;	
 	private Matrix selectedMatrix;
+	private ArrayList<Matrix> matrixArray;
 	
 	public GUI(){
 		super("Matrix Calculator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		matrixArray = new ArrayList();
 		
 		setSize(980, 600);
 		setResizable(true);
@@ -38,7 +42,7 @@ public class GUI extends JFrame implements ActionListener {
 	public void init(){
 		leftBar();
 		topBar();
-		mainScreen = new Screen();
+		mainScreen = new Screen(this);
 		add(mainScreen, BorderLayout.CENTER);
 		
 	}
@@ -49,7 +53,7 @@ public class GUI extends JFrame implements ActionListener {
 		logoBar.setLayout(new BorderLayout());
 		logoBar.setBackground(new Color(214, 33, 36));
 		
-		MLModel = new DefaultListModel<Matrix>();
+		MLModel = new DefaultListModel<String>();
 		
 		matrixList = new JList(MLModel);
 		matrixList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -119,9 +123,12 @@ public class GUI extends JFrame implements ActionListener {
 		JButton disableButtons[] = {helpButton};
 		disableAllBut(disableButtons);
 		mainScreen.createNewMatrixA();
-		//repaint();
-		//revalidate();
-		
+	}
+	
+	public void addMatrix(Matrix m){
+		matrixArray.add(m);
+		MLModel.addElement(m.getName());
+		revalidate();
 	}
 	
 	public void disableAllBut(JButton[] b){
