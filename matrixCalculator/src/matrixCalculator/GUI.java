@@ -35,6 +35,12 @@ public class GUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == createMatrix){
 			createMatrix();
+		} else if (e.getSource() == selectMatrix){
+			displayMatrix();
+		} else if (e.getSource() == deleteMatrix){
+			deleteSelectedMatrix();
+		} else if(e.getSource() == transposeButton){
+			function_transpose();
 		}
 		
 	}
@@ -131,6 +137,10 @@ public class GUI extends JFrame implements ActionListener {
 		revalidate();
 	}
 	
+	public void setSelectedMatrix(Matrix m){
+		selectedMatrix = m;
+	}
+	
 	public void disableAllBut(JButton[] b){
 		JButton allButton[] = {createMatrix, selectMatrix, deleteMatrix, helpButton, transposeButton, detButton, rowRedButton, inverseButton};
 		for(int i = 0; i<allButton.length; i++){
@@ -148,6 +158,25 @@ public class GUI extends JFrame implements ActionListener {
 		JButton allButton[] = {createMatrix, selectMatrix, deleteMatrix, helpButton, transposeButton, detButton, rowRedButton, inverseButton};
 		for(int i = 0; i<allButton.length; i++){
 			allButton[i].setEnabled(true);
+		}
+	}
+	
+	public void displayMatrix(){
+		Matrix m = matrixArray.get(matrixList.getSelectedIndex());
+		mainScreen.displayMatrix(m);
+		selectedMatrix = m;
+	}
+	
+	public void deleteSelectedMatrix(){
+		matrixArray.remove(matrixList.getSelectedIndex());
+		MLModel.remove(matrixList.getSelectedIndex());
+		mainScreen.reset();
+		selectedMatrix = null;
+	}
+	
+	public void function_transpose(){
+		if(selectedMatrix != null){
+			mainScreen.transpose(selectedMatrix);
 		}
 	}
 }
