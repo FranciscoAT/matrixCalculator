@@ -129,36 +129,42 @@ public class matrixMath {
 			rank = A.length;
 		else
 			rank = aug;
+		double[][] R = new double[A.length][A[0].length];
+		for(int i = 0; i<R.length; i++){
+			for(int j = 0; j<R[0].length; j++ ){
+				R[i][j] = A[i][j];
+			}
+		}
 		for(int c = 0; c <rank; c++){
-				if(A[c][c] == 0){
-					for(int r = c+1; r<A.length; r++){
-						if(A[r][c] != 0){
-							double T[] = new double[A.length];
-							for(int i = 0; i<A.length; i++){
-								T[i] = A[c][i];
-								A[c][i] = A[r][i];
-								A[r][i] = T[i];
+				if(R[c][c] == 0){
+					for(int r = c+1; r<R.length; r++){
+						if(R[r][c] != 0){
+							double T[] = new double[R.length];
+							for(int i = 0; i<R.length; i++){
+								T[i] = R[c][i];
+								R[c][i] = R[r][i];
+								R[r][i] = T[i];
 							}
 						}
 					}
 				}
 			
-			double constant = A[c][c];
-			for(int i = 0; i <A[0].length; i++){
+			double constant = R[c][c];
+			for(int i = 0; i <R[0].length; i++){
 				if(constant != 0)
-					A[c][i] = A[c][i]/constant;
+					R[c][i] = R[c][i]/constant;
 			}
-			for(int i =0; i<A.length; i++){
-				if(A[i][c] != 0 && i != c){
-					constant = A[i][c]*-1;
-					for(int j = 0; j<A[0].length; j++){
-						A[i][j] += A[c][j]*constant;
+			for(int i =0; i<R.length; i++){
+				if(R[i][c] != 0 && i != c){
+					constant = R[i][c]*-1;
+					for(int j = 0; j<R[0].length; j++){
+						R[i][j] += R[c][j]*constant;
 					}
 				}
 			}
 		}
-		A = sortByRank(A, aug);
-		return A;
+		R = sortByRank(R, aug);
+		return R;
 	} //end rowReduction method
 	
 	
