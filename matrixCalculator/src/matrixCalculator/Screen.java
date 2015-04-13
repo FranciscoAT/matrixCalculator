@@ -51,10 +51,14 @@ public class Screen extends JPanel implements ActionListener{
 			reset();
 		} else if (e.getSource() == next){
 			if(numNext == 0)
-				createNewMatrixB();
+					createNewMatrixB();
 			else if(numNext ==1){
-				createNewMatrixC();
-			}
+				try{
+					createNewMatrixC();
+				} catch(NumberFormatException exception) {
+					JOptionPane.showMessageDialog(null, "Invalid inputs!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} 
 		} else if(e.getSource() == createAsNew){
 			createAsNewM();
 		}
@@ -126,7 +130,7 @@ public class Screen extends JPanel implements ActionListener{
 		revalidate();
 	}
 	
-	public void createNewMatrixC(){
+	public void createNewMatrixC() throws NumberFormatException{
 		double[][] doubleValues = new double[matrixValues.length][matrixValues[0].length];
 		for(int i = 0; i<matrixValues.length; i++){
 			for(int j = 0; j<matrixValues[0].length; j++){
