@@ -5,6 +5,11 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/**
+ * @author Francisco Trindade; francisco.ad.trindade@gmail.com
+ * @since 13/04/15
+ */
+
 public class Screen extends JPanel implements ActionListener{
 	
 	private static int maxArrLength = 10;

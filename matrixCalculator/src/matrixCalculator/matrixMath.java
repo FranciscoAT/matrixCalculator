@@ -1,5 +1,10 @@
 package matrixCalculator;
 
+/**
+ * @author Francisco Trindade; francisco.ad.trindade@gmail.com
+ * @since 13/04/15
+ */
+
 public class matrixMath {
 	
 	/**

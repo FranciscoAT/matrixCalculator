@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * @author Francisco Trindade; francisco.ad.trindade@gmail.com
+ * @since 13/04/15
+ */
+
 public class GUI extends JFrame implements ActionListener {
 	
 	private JPanel topBar, logoBar;
