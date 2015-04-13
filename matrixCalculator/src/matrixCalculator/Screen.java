@@ -222,6 +222,8 @@ public class Screen extends JPanel implements ActionListener{
 			title.setText(m.getName()+" : Inverse");
 			bottomPanel.add(createAsNew);
 		} else {
+			reset();
+			title.setText(m.getName()+" : Inverse");
 			JLabel tempLabel = new JLabel("Unable to get Inverse of selected matrix!");
 			centerPanel.add(tempLabel);
 			title.setText(m.getName()+" : Inverse");
