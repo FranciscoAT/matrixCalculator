@@ -15,7 +15,6 @@ public class Screen extends JPanel implements ActionListener{
 	private GUI runInstance;
 	private int numNext;
 	private Matrix newMatrix;
-	
 	private JComboBox numRows, numCol;
 	
 	public Screen(GUI runInstance){
@@ -112,11 +111,14 @@ public class Screen extends JPanel implements ActionListener{
 		bottomPanel.add(cancel, BorderLayout.SOUTH);
 		centerPanel.setLayout(new GridLayout(newMatrixRows, newMatrixCol));
 		matrixValues = new JTextField[newMatrixRows][newMatrixCol];
+		double count = 0;
 		for(int i = 0; i<newMatrixRows; i++){
 			for(int j = 0; j<newMatrixCol; j++){
-				matrixValues[i][j] = new JTextField(i+";"+j);
+				matrixValues[i][j] = new JTextField(""+count);
 				matrixValues[i][j].setPreferredSize(new Dimension(10,10));
+				matrixValues[i][j].setHorizontalAlignment(JTextField.CENTER);
 				centerPanel.add(matrixValues[i][j]);
+				count++;
 			}
 		}
 		
@@ -140,7 +142,7 @@ public class Screen extends JPanel implements ActionListener{
 	
 	public void displayMatrix(Matrix m){
 		reset();
-		title.setText("Matrix: "+m.getName());
+		title.setText(""+m.getName());
 		double[][] vals = m.getMatrix();
 		currentMatrixValues = new JLabel[m.getNumRows()][m.getNumColumns()];
 		centerPanel.setLayout(new GridLayout(m.getNumRows(), m.getNumColumns()));
@@ -163,24 +165,69 @@ public class Screen extends JPanel implements ActionListener{
 	}
 	
 	public void transpose(Matrix m){
-		m.setMatrixValues(matrixMath.transpose(m.getMatrix()));
-		title.setText("Matrix: "+m.getName()+" : Transposed");
-		displayMatrix(m);
+		Matrix tempM = new Matrix("", m.getNumColumns(), m.getNumRows());
+		tempM.setMatrixValues(matrixMath.transpose(m.getMatrix()));
+		displayMatrix(tempM);
+		title.setText(m.getName()+" : Transposed");
 		bottomPanel.add(cancel);
 		bottomPanel.add(createAsNew);
 		revalidate();
 	}
 	
+	public void getDet(Matrix m){
+		reset();
+		bottomPanel.add(cancel);
+		double tempD = matrixMath.getDet(m.getMatrix());
+		String output;
+		if(tempD == Double.NaN)
+			output = "Unable to obtain det, lengths are not equal!";
+		else
+			output = ""+tempD;
+		title.setText("Det of Matrix: "+m.getName());
+		JLabel tempLabel = new JLabel("Det = "+output);
+		centerPanel.add(tempLabel);
+		revalidate();
+	}
+	
 	public void createAsNewM(){
-		String name = title.getText().substring(8);
+		String name = title.getText();
 		double vals[][] = new double[currentMatrixValues.length][currentMatrixValues[0].length];
 		for(int i = 0; i<vals.length; i++){
-			for(int j = 0; j<vals[0].length; i++){
+			for(int j = 0; j<vals[0].length; j++){
 				vals[i][j] = Double.parseDouble(currentMatrixValues[i][j].getText());
 			}
 		}
 		Matrix m = new Matrix(name, currentMatrixValues.length, currentMatrixValues[0].length);
+		m.setMatrixValues(vals);
 		runInstance.addMatrix(m);
+		reset();
+	}
+	
+	public void getRowReduce(Matrix m){
+		Matrix tempM = new Matrix("", m.getNumRows(), m.getNumColumns());
+		tempM.setMatrixValues(matrixMath.rowReduce(m.getMatrix(), m.getNumColumns()));
+		displayMatrix(tempM);
+		title.setText(m.getName()+" : Row Reduced");
+		bottomPanel.add(cancel);
+		bottomPanel.add(createAsNew);
+		revalidate();
+	}
+	
+	public void getInverse(Matrix m){
+		double[][] tempVal = matrixMath.getInverse(m.getMatrix());
+		if(tempVal != null){
+			Matrix tempM = new Matrix("", m.getNumRows(), m.getNumColumns());
+			tempM.setMatrixValues(tempVal);
+			displayMatrix(tempM);
+			title.setText(m.getName()+" : Inverse");
+			bottomPanel.add(createAsNew);
+		} else {
+			JLabel tempLabel = new JLabel("Unable to get Inverse of selected matrix!");
+			centerPanel.add(tempLabel);
+			title.setText(m.getName()+" : Inverse");
+		}
+		bottomPanel.add(cancel);
+		revalidate();
 	}
 	
 	

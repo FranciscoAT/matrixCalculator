@@ -41,8 +41,15 @@ public class GUI extends JFrame implements ActionListener {
 			deleteSelectedMatrix();
 		} else if(e.getSource() == transposeButton){
 			function_transpose();
+		} else if(e.getSource() == detButton){
+			function_getDet();
+		} else if(e.getSource() == rowRedButton){
+			function_rowReduce();
+		} else if(e.getSource() == inverseButton){
+			function_getInverse();
+		} else if(e.getSource() == helpButton){
+			displayHelp();
 		}
-		
 	}
 	
 	public void init(){
@@ -111,15 +118,19 @@ public class GUI extends JFrame implements ActionListener {
 		topBar.add(title);
 		
 		transposeButton = new JButton("Transpose M");
+		transposeButton.addActionListener(this);
 		topBar.add(transposeButton);
 		
 		detButton = new JButton("Get Det of M");
+		detButton.addActionListener(this);
 		topBar.add(detButton);
 		
 		rowRedButton = new JButton("Row Reduce M");
+		rowRedButton.addActionListener(this);
 		topBar.add(rowRedButton);
 
 		inverseButton = new JButton("Inverse M");
+		inverseButton.addActionListener(this);
 		topBar.add(inverseButton);
 		
 		add(topBar, BorderLayout.NORTH);
@@ -162,21 +173,54 @@ public class GUI extends JFrame implements ActionListener {
 	}
 	
 	public void displayMatrix(){
-		Matrix m = matrixArray.get(matrixList.getSelectedIndex());
-		mainScreen.displayMatrix(m);
-		selectedMatrix = m;
+		if(matrixList.getSelectedIndex() != -1){
+			Matrix m = matrixArray.get(matrixList.getSelectedIndex());
+			mainScreen.displayMatrix(m);
+			selectedMatrix = m;
+		}
 	}
 	
 	public void deleteSelectedMatrix(){
-		matrixArray.remove(matrixList.getSelectedIndex());
-		MLModel.remove(matrixList.getSelectedIndex());
-		mainScreen.reset();
-		selectedMatrix = null;
+		if(matrixList.getSelectedIndex() != -1){
+			matrixArray.remove(matrixList.getSelectedIndex());
+			MLModel.remove(matrixList.getSelectedIndex());
+			mainScreen.reset();
+			selectedMatrix = null;
+		}
 	}
 	
 	public void function_transpose(){
 		if(selectedMatrix != null){
 			mainScreen.transpose(selectedMatrix);
 		}
+	}
+	
+	public void function_getDet(){
+		if(selectedMatrix!= null)
+			mainScreen.getDet(selectedMatrix);
+	}
+	
+	public void function_rowReduce(){
+		if(selectedMatrix != null)
+			mainScreen.getRowReduce(selectedMatrix);
+	}
+	
+	public void function_getInverse(){
+		if(selectedMatrix != null)
+			mainScreen.getInverse(selectedMatrix);
+	}
+	
+	public void displayHelp(){
+		String tempString = "MATRIX CALCULATOR\nCreated by: Francisco Trindade\nEmail: francisco.ad.trindade@gmail.com\n\n***************\n"
+				+ "Create Matrix: Creates a new matrix, follow steps involved ensure all fields are filled!\n"
+				+ "Delete Matrix: Deletes the currently selected matrix in the list.\n"
+				+ "Select Matrix: Selects and displays the currently selected matrix in the list.\n"
+				+ "Get Det M/ Row Reduce M/ Get Inverse M/Transpose M: Do the selected functions of the currently selected matrix.\n"
+				+ "After selected a function to apply to the matrix. Will appear (depending) with a new matrix and a Cancel and Create as new M button.\n"
+				+ "Create as new M: Will create the new temporary matrix and add it to the list.\n"
+				+ "Cancel: Will redirect user to a blank page.\n"
+				+ "***************\n"
+				+ "Please email me for any questions.";
+		JOptionPane.showMessageDialog(null, tempString, "Help", JOptionPane.PLAIN_MESSAGE);
 	}
 }
